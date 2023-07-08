@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: frontend-lucas
+  name: ingress-frontend-lucas
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip # using IP routing policy of ALB
+    alb.ingress.kubernetes.io/subnets: subnet-0d918b40bc87c1fc4, subnet-074a3fdfcb9f2578a
+    alb.ingress.kubernetes.io/security-groups: sg-0ea6094b538a72897
+    alb.ingress.kubernetes.io/shield-advanced-protection: 'false'
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-lucas-svc # refer to the service defined in deploy.yaml
+                port:
+                  number: 3000

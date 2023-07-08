@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Namespace # create the namespace for this application
+metadata:
+  name: frontend-lucas
+---
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: frontend-lucas-deploy
+  namespace: frontend-lucas
+spec:
+  selector:
+    matchLabels:
+      app: frontend-lucas
+  template:
+    metadata:
+      labels:
+        app: frontend-lucas
+    spec:
+      containers:
+      - name: frontend
+        image: 311057203283.dkr.ecr.us-east-1.amazonaws.com/frontend-lucas:1.0
+        ports:
+        - containerPort: 3000 
+        resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 250m
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: frontend-lucas-hpa
+  namespace: frontend-lucas
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: frontend-lucas-deploy
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 10 # define the replicas range and the scaling policy for the deployment
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-lucas-svc
+  namespace: frontend-lucas
+  labels:
+    app: frontend-lucas
+spec:
+  selector:
+    app: frontend-lucas
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: NodePort # expose the service as NodePort type so that ALB can use it later.
