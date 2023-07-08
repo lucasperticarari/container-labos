@@ -1,3 +1,3 @@
-# Repositorio de almacenamiento de Laboratorios de Containers
+# Repositorio de Laboratorios de Containers
 
 
