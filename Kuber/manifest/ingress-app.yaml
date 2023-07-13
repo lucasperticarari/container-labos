@@ -1,3 +1,8 @@
+#
+#
+# REEMPLAZAR "LUCAS" DE TODAS LAS DEFINICIONES, POR EL NOMBRE DEL OWNER DE ESTE DESPLIEGUE.
+#
+#
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:

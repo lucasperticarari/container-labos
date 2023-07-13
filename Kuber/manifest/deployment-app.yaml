@@ -1,3 +1,8 @@
+#
+#
+# REEMPLAZAR "LUCAS" DE TODAS LAS DEFINICIONES, POR EL NOMBRE DEL OWNER DE ESTE DESPLIEGUE.
+#
+#
 apiVersion: v1
 kind: Namespace # create the namespace for this application
 metadata:
